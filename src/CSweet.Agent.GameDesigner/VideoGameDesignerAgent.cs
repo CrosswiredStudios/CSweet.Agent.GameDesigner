@@ -1,4 +1,4 @@
-using CSweet.VideoGame.AgentKit;
+using CrosswiredStudios.VideoGame.AgentKit;
 
 namespace CSweet.Agent.GameDesigner;
 
@@ -9,7 +9,7 @@ namespace CSweet.Agent.GameDesigner;
 public sealed class VideoGameDesignerAgent : VideoGameSpecialistAgentBase
 {
     public override string AgentId => "com.csweet.video-game-designer";
-    public override string Version => "2.1.0";
+    public override string Version => "2.1.1";
 
     protected override string RoleKey => "game-designer";
     protected override string ArtifactTypeKey => "video-game.gameplay-systems-design.v1";

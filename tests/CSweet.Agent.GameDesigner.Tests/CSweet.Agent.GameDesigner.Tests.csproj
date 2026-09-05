@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\CSweet.Agent.GameDesigner\CSweet.Agent.GameDesigner.csproj" />
-    <ProjectReference Include="$(CSweetVideoGameRepositoryRoot)\src\CSweet.VideoGame.AgentKit\CSweet.VideoGame.AgentKit.csproj" />
   </ItemGroup>
   <ItemGroup><Using Include="Xunit" /></ItemGroup>
 </Project>
