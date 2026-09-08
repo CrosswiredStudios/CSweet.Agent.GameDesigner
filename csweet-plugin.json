@@ -8,7 +8,7 @@
     "specializationKeys": ["video-game-development", "game-design", "gameplay-systems", "progression-balance", "game-content", "prototype-design"]
   },
   "id": "com.csweet.video-game-designer",
-  "name": "C-Sweet Video Game Designer",
+  "name": "Hana Mori",
   "version": "2.1.1",
   "publisher": { "id": "com.csweet", "name": "C-Sweet" },
   "runtime": {
@@ -71,6 +71,9 @@
   "webAccess": { "mode": "None", "rules": [] },
   "ui": [],
   "catalog": {
+    "imageUrl": "https://raw.githubusercontent.com/CrosswiredStudios/CSweet.Agent.GameDesigner/main/assets/branding/portrait-v1.jpg",
+    "companyLogoUrl": "https://raw.githubusercontent.com/CrosswiredStudios/CSweet.Agent.GameDesigner/main/assets/branding/csweet-icon.svg",
+    "accentColor": "#AA6040",
     "summary": "Accountable game designer for mechanics, gameplay systems, progression, balance, prototype hypotheses, and content rules.",
     "category": "Creative",
     "role": { "key": "game-designer", "name": "Video Game Designer" },
