@@ -9,7 +9,7 @@ namespace CSweet.Agent.GameDesigner;
 public sealed class VideoGameDesignerAgent : VideoGameSpecialistAgentBase
 {
     public override string AgentId => "com.csweet.video-game-designer";
-    public override string Version => "2.1.1";
+    public override string Version => "2.2.0";
 
     protected override string RoleKey => "game-designer";
     protected override string ArtifactTypeKey => "video-game.gameplay-systems-design.v1";

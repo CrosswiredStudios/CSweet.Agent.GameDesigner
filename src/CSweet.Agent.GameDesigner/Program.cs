@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 if (args.Contains("--self-test", StringComparer.Ordinal))
 {
     var agent = new VideoGameDesignerAgent();
-    if (agent.AgentId != "com.csweet.video-game-designer" || agent.Version != "2.1.1")
+    if (agent.AgentId != "com.csweet.video-game-designer" || agent.Version != "2.2.0")
         throw new InvalidOperationException("Video Game Designer identity self-test failed.");
     Console.WriteLine($"{agent.AgentId} {agent.Version} self-test passed.");
     return;

@@ -9,7 +9,7 @@
   },
   "id": "com.csweet.video-game-designer",
   "name": "Hana Mori",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "publisher": { "id": "com.csweet", "name": "C-Sweet" },
   "runtime": {
     "type": "dotnet-project",
@@ -51,6 +51,11 @@
     }
   ],
   "requires": [
+    {"name": "work.calendar.read.v1", "scope": "organization", "purpose": "Operate the business calendar within event ownership and reporting authority."},
+    {"name": "work.calendar.create.v1", "scope": "organization", "purpose": "Operate the business calendar within event ownership and reporting authority."},
+    {"name": "work.calendar.update.v1", "scope": "organization", "purpose": "Operate the business calendar within event ownership and reporting authority."},
+    {"name": "work.calendar.cancel.v1", "scope": "organization", "purpose": "Operate the business calendar within event ownership and reporting authority."},
+    {"name": "work.calendar.schedule.v1", "scope": "organization", "purpose": "Operate the business calendar within event ownership and reporting authority."},
     { "name": "platform.llm.chat-stream.v1", "scope": "organization", "purpose": "Produce vision-grounded, substantive gameplay-system decisions." },
     { "name": "work.item.read", "scope": "organization", "purpose": "Read only the authoritative assigned board item." },
     { "name": "work.item.comment", "scope": "organization", "purpose": "Record progress, blockers, findings, and evidence on the work item." },
@@ -62,7 +67,7 @@
     { "name": "platform.agent-operating-state.read.v1", "scope": "organization", "purpose": "Recover project/work-item state and duplicate-delivery outcomes after restart." },
     { "name": "platform.agent-operating-state.write.v1", "scope": "organization", "purpose": "Persist revision-safe state isolated by Workstream and authoritative work item." }
   ],
-  "events": { "subscribes": ["com.csweet.agent.coordination.turn-requested.v1"] },
+  "events": { "subscribes": ["com.csweet.calendar.reminder-due.v1", "com.csweet.agent.coordination.turn-requested.v1"] },
   "configuration": [
     { "key": "llmProviderId", "type": "provider", "label": "LLM provider", "required": true, "secret": false },
     { "key": "llmModel", "type": "model", "label": "Model", "required": true, "secret": false, "dependsOnFieldKey": "llmProviderId" }
