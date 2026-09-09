@@ -273,9 +273,13 @@ public abstract class VideoGameSpecialistAgentBase : CSweetAgentBase
         {
             var items = new CrosswiredStudios.VideoGame.Contracts.GameProposedWorkItemV1[]
             {
+                new("milestone-core-player-loop", CrosswiredStudios.VideoGame.Contracts.VideoGameWorkItemTypeKeys.Milestone,
+                    "Accepted core player loop", "Demonstrate and validate the accepted core player loop.",
+                    ["The core-loop feature meets its accepted outcome and validation criteria."], "", [], [], [], []),
                 new("feature-core-player-loop", CrosswiredStudios.VideoGame.Contracts.VideoGameWorkItemTypeKeys.Feature,
                     "Core player loop", "Deliver the player-facing core loop defined by the accepted vision.",
-                    ["The accepted vision's core-loop outcome is demonstrable and measurable."], "", [], [], [], []),
+                    ["The accepted vision's core-loop outcome is demonstrable and measurable."], "", [], [], [], [])
+                { ParentProposalKey = "milestone-core-player-loop" },
                 new("design-core-player-loop", CrosswiredStudios.VideoGame.Contracts.VideoGameWorkItemTypeKeys.Task,
                     "Specify the core player loop", "Turn the accepted vision into falsifiable gameplay rules, states, feedback, failure, recovery, and tuning variables.",
                     ["Rules, state transitions, feedback, edge cases, instrumentation, and validation criteria are explicit."],

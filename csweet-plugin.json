@@ -9,7 +9,7 @@
   },
   "id": "com.csweet.video-game-designer",
   "name": "Hana Mori",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "publisher": { "id": "com.csweet", "name": "C-Sweet" },
   "runtime": {
     "type": "dotnet-project",
