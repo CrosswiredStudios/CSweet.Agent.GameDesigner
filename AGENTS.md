@@ -1,5 +1,10 @@
 # Agent contributor instructions
 
+## Invariants
+
+- Keep `com.csweet.video-game-designer` and version `2.3.1` synchronized between agent code,
+  `csweet-plugin.json`, tests, and releases.
+
 ## Release-note ordering
 
 - Bump the agent version FIRST, synchronizing the root `csweet-plugin.json`, implementation identity, project/package version, and version assertions as required by this repository.
