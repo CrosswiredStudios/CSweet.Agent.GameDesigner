@@ -12,7 +12,7 @@ public sealed class VideoGameDesignerAgentTests
     {
         var agent = new VideoGameDesignerAgent();
         Assert.Equal("com.csweet.video-game-designer", agent.AgentId);
-        Assert.Equal("2.3.2", agent.Version);
+        Assert.Equal("2.4.0", agent.Version);
         Assert.Equal("work.execution.run.v1", agent.PrimaryCapability);
     }
 
@@ -45,7 +45,7 @@ public sealed class VideoGameDesignerAgentTests
     {
         var path = Path.Combine(AppContext.BaseDirectory, "csweet-plugin.json");
         var manifest = await AgentManifestLoader.LoadAsync(path, CancellationToken.None);
-        Assert.Equal("2.3.2", manifest.Version);
+        Assert.Equal("2.4.0", manifest.Version);
         Assert.Contains(manifest.Provides, capability => capability.Name == "work.execution.run.v1");
         using var json = JsonDocument.Parse(await File.ReadAllTextAsync(path));
         var tokenFields = json.RootElement.GetProperty("configuration").EnumerateArray()

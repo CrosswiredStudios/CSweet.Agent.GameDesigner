@@ -49,11 +49,11 @@ public static class SpecialistAssignmentValidator
             assignment.OrganizationId == Guid.Empty || assignment.BoardId == Guid.Empty ||
             assignment.SprintId == Guid.Empty || assignment.ItemId == Guid.Empty)
             throw new ArgumentException("Execution requires authoritative sprint, item, stage, attempt, organization, and board identity.");
-        if (assignment.AssignmentRevision < 1 || assignment.Traversal < 1 || assignment.Attempt < 1)
+        if (assignment.AssignmentRevision < 1 || assignment.Traversal < 0 || assignment.Attempt < 1)
             throw new ArgumentException("Assignment revision, traversal, and attempt must be positive.");
         if (assignment.Deadline <= DateTimeOffset.UtcNow)
             throw new ArgumentException("The authoritative execution deadline has expired.");
-        var input = assignment.Input.Deserialize<WorkExecutionInputV1>()
+        var input = assignment.Input.Deserialize<WorkExecutionInputV1>(new JsonSerializerOptions(JsonSerializerDefaults.Web))
             ?? throw new ArgumentException("The canonical work execution input is required.");
         if (input.WorkstreamId is null || input.WorkstreamId == Guid.Empty || input.TeamId is null || input.TeamId == Guid.Empty)
             throw new ArgumentException("Canonical workstream and team context are required.");
@@ -70,7 +70,8 @@ public static class SpecialistAssignmentValidator
         if (!string.Equals(requirements.RequiredRoleKey, expectedRoleKey, StringComparison.Ordinal) ||
             selection.AgentInstallationId == Guid.Empty || selection.TeamRosterRevision < 1 ||
             !IsSha256(selection.ProfileDefinitionDigest) || !IsSha256(selection.DecisionFingerprint) ||
-            !requirements.RequiredCapabilityKeys.Contains("work.execution.run.v1", StringComparer.Ordinal) ||
+            !(requirements.RequiredCapabilityKeys.Contains("work.execution.run.v1", StringComparer.Ordinal) ||
+              requirements.RequiredCapabilityKeys.Contains("work.execution.run.v2", StringComparer.Ordinal)) ||
             requirements.RequiredSpecializationKeys.Except(selection.MatchedSpecializationKeys, StringComparer.Ordinal).Any())
             throw new UnauthorizedAccessException("The canonical assignment does not prove exact role, skill, and execution eligibility.");
         var package = input.Planning.ArtifactPackageDigest
@@ -488,16 +489,20 @@ public abstract class VideoGameSpecialistAgentBase : CSweetAgentBase
         }
     }
 
+    private static bool IsHierarchicalArtifact(WorkExecutionAssignmentV1 assignment) =>
+        assignment.Item.Deserialize<WorkItem>(new JsonSerializerOptions(JsonSerializerDefaults.Web))?.Delivery is
+            { DeliveryPlanId: not null, DeliveryKind: "Artifact" };
+
     private static WorkExecutionOutcomeV1 CompletedOutcome(
         WorkExecutionAssignmentV1 assignment,
         SpecialistDelivery delivery) =>
         new(assignment.StageExecutionId, assignment.AttemptId, WorkExecutionDispositions.Completed,
-            "completed", delivery.Summary,
+            IsHierarchicalArtifact(assignment) ? "artifact-delivered" : "completed", delivery.Summary,
             JsonSerializer.SerializeToElement(new
             {
                 delivery.ArtifactId, delivery.RevisionId, delivery.Sha256, delivery.RemainingRisks
             }),
-            [new WorkExecutionEvidence("ArtifactRevision", delivery.ArtifactId.ToString("D"),
+            [new WorkExecutionEvidence(IsHierarchicalArtifact(assignment) ? "artifact-revision" : "ArtifactRevision", delivery.ArtifactId.ToString("D"),
                 delivery.RevisionId.ToString("D"), "application/json")], []);
 
     private static string Digest(string value) =>
