@@ -18,7 +18,7 @@
   },
   "id": "com.csweet.video-game-designer",
   "name": "Hana Mori",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "publisher": {
     "id": "com.csweet",
     "name": "C-Sweet"
@@ -477,13 +477,107 @@
       "name": "platform.agent-operating-state.write.v1",
       "scope": "organization",
       "purpose": "Persist revision-safe state isolated by Workstream and authoritative work item."
+    },
+    {
+      "name": "work.delegation.create.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.delegation.read.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.delegation.respond.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.delegation.publish.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.delegation.cancel.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.follow.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.unfollow.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.read.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.progress.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.pending.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.tracking.processed.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "platform.organization.snapshot.read.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "communication.chat.read.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.personal-todo.read.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
+    },
+    {
+      "name": "work.personal-todo.add.v1",
+      "scope": "organization",
+      "purpose": "Use shared SDK delegation, authenticated recipient resolution, canonical work and durable reporting within existing resource authority.",
+      "modelVisible": false
     }
   ],
   "events": {
     "subscribes": [
       "com.csweet.calendar.reminder-due.v1",
       "com.csweet.work.personal-todo.available.v1",
-      "com.csweet.agent.coordination.turn-requested.v1"
+      "com.csweet.agent.coordination.turn-requested.v1",
+      "com.csweet.work.delegation.received.v1",
+      "com.csweet.work.tracking.changed.v1",
+      "com.csweet.user.message.received.v1",
+      "com.csweet.agent.attention.review-due.v1"
     ]
   },
   "configuration": [
