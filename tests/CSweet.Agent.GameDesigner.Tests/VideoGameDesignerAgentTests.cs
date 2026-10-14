@@ -12,8 +12,8 @@ public sealed class VideoGameDesignerAgentTests
     {
         var agent = new VideoGameDesignerAgent();
         Assert.Equal("com.csweet.video-game-designer", agent.AgentId);
-        Assert.Equal("2.5.1", agent.Version);
-        Assert.Equal("work.execution.run.v1", agent.PrimaryCapability);
+        Assert.Equal("3.0.0", agent.Version);
+        Assert.Equal("work.execution.run", agent.PrimaryCapability);
     }
 
     [Fact]
@@ -45,8 +45,8 @@ public sealed class VideoGameDesignerAgentTests
     {
         var path = Path.Combine(AppContext.BaseDirectory, "csweet-plugin.json");
         var manifest = await AgentManifestLoader.LoadAsync(path, CancellationToken.None);
-        Assert.Equal("2.5.1", manifest.Version);
-        Assert.Contains(manifest.Provides, capability => capability.Name == "work.execution.run.v1");
+        Assert.Equal("3.0.0", manifest.Version);
+        Assert.Contains(manifest.Provides, capability => capability.Name == "work.execution.run");
         using var json = JsonDocument.Parse(await File.ReadAllTextAsync(path));
         var tokenFields = json.RootElement.GetProperty("configuration").EnumerateArray()
             .Where(field => field.GetProperty("key").GetString() is
@@ -56,7 +56,7 @@ public sealed class VideoGameDesignerAgentTests
             value => value.GetString() == "com.csweet.agent.coordination.turn-requested.v1");
         Assert.Equal("None", json.RootElement.GetProperty("webAccess").GetProperty("mode").GetString());
         Assert.Empty(VideoGameSpecialistConformance.ValidateManifest(
-            path, "com.csweet.video-game-designer", "game-designer", "work.execution.run.v1"));
+            path, "com.csweet.video-game-designer", "game-designer", "work.execution.run"));
         var requires = json.RootElement.GetProperty("requires").EnumerateArray()
             .Select(x => x.GetProperty("name").GetString()!).ToList();
         Assert.Contains("work.item.comment", requires);
@@ -65,14 +65,9 @@ public sealed class VideoGameDesignerAgentTests
         Assert.DoesNotContain(requires, x => x.Contains("spend", StringComparison.OrdinalIgnoreCase));
     }
 
-    private static WorkExecutionAssignmentV1 ValidAssignment()
+    private static WorkExecutionAssignment ValidAssignment()
     {
-        return new WorkExecutionAssignmentV1(
-            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
-            Guid.NewGuid(), Guid.NewGuid(), 1, "GAME", "GAME-1", Guid.NewGuid(), "design", 1, 1,
-            DateTimeOffset.UtcNow.AddMinutes(5), "Design the core interaction.",
-            JsonSerializer.SerializeToElement(new { status = "InProgress" }),
-            JsonSerializer.SerializeToElement(BuildInput(new string('a', 64))), [], []);
+        return new WorkExecutionAssignment(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.Empty, Guid.NewGuid(), Guid.NewGuid(), "Task", null, 0, Guid.NewGuid(), Guid.NewGuid(), 1, "GAME-1", Guid.NewGuid(), "design", 1, 1, DateTimeOffset.UtcNow.AddMinutes(5), "Design the core interaction.", JsonSerializer.SerializeToElement(new { status = "InProgress" }), JsonSerializer.SerializeToElement(BuildInput(new string('a', 64))), [], []);
     }
 
     private static WorkExecutionInputV1 BuildInput(string memberDigest)

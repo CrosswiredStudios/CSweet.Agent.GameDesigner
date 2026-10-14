@@ -20,22 +20,19 @@ public sealed class SpecialistHierarchicalExecutionTests
         var member = new ArtifactPackageMemberDigest(Guid.NewGuid(), Guid.NewGuid(), "approved-input", new string('a', 64));
         var planning = new WorkItemPlanningSpecification(["Deliver exact artifact"], ["Meets criterion"])
         {
-            DelegationRecommendations = [new("specialist-execution", "specialist", ["work.execution.run.v2"], null, true, "Assigned discipline")],
+            DelegationRecommendations = [new("specialist-execution", "specialist", ["work.execution.run"], null, true, "Assigned discipline")],
             ArtifactPackageDigest = new(packageId, 1, ArtifactPackageDigestCalculator.Calculate(packageId, 1, [member]), DateTimeOffset.UtcNow, [member])
         };
         var input = new WorkExecutionInputV1(Guid.NewGuid(), Guid.NewGuid(), 1, planning)
         {
-            AssignmentRequirements = new("specialist", [], [], ["work.execution.run.v2"]),
+            AssignmentRequirements = new("specialist", [], [], ["work.execution.run"]),
             AssignmentSelection = new(Guid.NewGuid(), 1, new string('b', 64), [], new string('c', 64), DateTimeOffset.UtcNow)
         };
         var delivery = new WorkItemDeliverySpecification(Guid.Empty, planning.Requirements, planning.AcceptanceCriteria)
             { DeliveryKind = "Artifact", DeliveryPlanId = hierarchical ? Guid.NewGuid() : null };
-        var task = new WorkExecutionAssignmentV1(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(),
-            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), 1, "BOARD", "BOARD-1", Guid.NewGuid(), "specialist-execution", 0, 1,
-            DateTimeOffset.UtcNow.AddHours(1), "Deliver exact revision", JsonSerializer.SerializeToElement(new { delivery }, json),
-            JsonSerializer.SerializeToElement(input, json), [], []);
-        var v2 = WorkExecutionAssignmentV2.FromTask(task, input.WorkstreamId!.Value, delivery.DeliveryPlanId, 1);
-        var canonical = v2.ToTaskAssignment();
+        var task = new WorkExecutionAssignment(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.Empty, Guid.NewGuid(), Guid.NewGuid(), "Task", null, 0, Guid.NewGuid(), Guid.NewGuid(), 1, "BOARD-1", Guid.NewGuid(), "specialist-execution", 0, 1, DateTimeOffset.UtcNow.AddHours(1), "Deliver exact revision", JsonSerializer.SerializeToElement(new { delivery }, json), JsonSerializer.SerializeToElement(input, json), [], []);
+        var v2 = (task with { WorkstreamId = input.WorkstreamId!.Value, DeliveryPlanId = delivery.DeliveryPlanId, ScopeRevision = 1 });
+        var canonical = v2.RequireTaskScope();
         Assert.Equal(input.WorkstreamId, SpecialistAssignmentValidator.Validate(canonical, "specialist").WorkstreamId);
         var content = "Concrete discipline-owned document evidence.";
         var digest = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(content)));
@@ -51,7 +48,7 @@ public sealed class SpecialistHierarchicalExecutionTests
         var qaInstallation = Guid.NewGuid();
         var reviewedItem = JsonSerializer.Deserialize<WorkItem>("{}")! with
         {
-            Id = canonical.ItemId, PlanningRevision = 1, Planning = planning,
+            Id = canonical.TaskItemId, PlanningRevision = 1, Planning = planning,
             StageAssignments = [new("quality", "AgentInstallation", Guid.NewGuid(), qaInstallation)]
         };
         var qa = canonical with
@@ -65,7 +62,7 @@ public sealed class SpecialistHierarchicalExecutionTests
             {
                 Assert.Equal(artifact.ArtifactId, request.GetProperty("artifactId").GetGuid());
                 return Task.FromResult(new ArtifactDocument(artifact.ArtifactId, "Delivered document", "discipline", "Submitted", artifact.RevisionId,
-                    artifact.RevisionId, null, null, canonical.ItemId,
+                    artifact.RevisionId, null, null, canonical.TaskItemId,
                     [new(artifact.RevisionId, 1, null, content, digest, "Submitted", DateTimeOffset.UtcNow, null, null)]));
             })
             .RegisterCapability<JsonElement, JsonElement>(PlatformCapabilities.LlmChatStream, (_, _) => Task.FromResult(

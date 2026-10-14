@@ -18,7 +18,7 @@
   },
   "id": "com.csweet.video-game-designer",
   "name": "Hana Mori",
-  "version": "2.5.1",
+  "version": "3.0.0",
   "publisher": {
     "id": "com.csweet",
     "name": "C-Sweet"
@@ -38,7 +38,7 @@
   },
   "provides": [
     {
-      "name": "work.execution.run.v2",
+      "name": "work.execution.run",
       "description": "Execute the authoritative task or delivery-plan scope with exact revision evidence and independent QA.",
       "inputSchema": {
         "type": "object",
@@ -260,84 +260,6 @@
         "additionalProperties": false
       },
       "executionTimeoutSeconds": 3600,
-      "idempotency": "work-item",
-      "riskClass": "standard"
-    },
-    {
-      "name": "work.execution.run.v1",
-      "description": "Author an exact, evidence-grounded gameplay systems design for one assigned board item.",
-      "inputSchema": {
-        "type": "object",
-        "additionalProperties": true,
-        "required": [
-          "sprintExecutionId",
-          "itemExecutionId",
-          "stageExecutionId",
-          "attemptId",
-          "organizationId",
-          "boardId",
-          "sprintId",
-          "itemId",
-          "assignmentRevision",
-          "boardKey",
-          "itemIdentifier",
-          "policyRevisionId",
-          "stageKey",
-          "traversal",
-          "attempt",
-          "deadline",
-          "instructions",
-          "item",
-          "input",
-          "priorOutcomes",
-          "evidence"
-        ],
-        "properties": {
-          "context": {
-            "type": "object"
-          },
-          "assignmentRevision": {
-            "type": "integer",
-            "minimum": 1
-          },
-          "roleKey": {
-            "const": "game-designer"
-          },
-          "taskTypeKey": {
-            "type": "string",
-            "minLength": 1
-          },
-          "instructions": {
-            "type": "string",
-            "minLength": 1
-          },
-          "documents": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "evidence": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "producerOrganizationUserId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "creativeDirectorOrganizationUserId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      },
-      "outputSchema": {
-        "type": "object",
-        "additionalProperties": true
-      },
-      "executionTimeoutSeconds": 900,
       "idempotency": "work-item",
       "riskClass": "standard"
     },
