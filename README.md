@@ -1,10 +1,10 @@
 # C-Sweet Video Game Designer
 
-First-party `com.csweet.video-game-designer` agent, version `0.1.0`.
+First-party `com.csweet.video-game-designer` agent, version `3.1.0`.
 
 It consumes an approved high-level GDD and authors Gameplay & Systems Design, UX/Controls/Accessibility, and Prototype/Content/Validation documents. It participates in a five-document package with Creative Direction. Every cross-agent document requires a human-approved exact-file grant. The package has no network, filesystem, or spending authority.
 
-Built with `CSweet.Agent.SDK` 3.65.0 and the bundled video-game extension source.
+Built with `CSweet.Agent.SDK` 5.26.0 and video-game contracts 1.3.0. The Producer can commission a bounded design assessment for an approaching Story.
 
 
 ## Extension ownership and isolated builds
