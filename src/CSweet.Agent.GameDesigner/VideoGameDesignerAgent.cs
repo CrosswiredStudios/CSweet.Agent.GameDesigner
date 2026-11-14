@@ -16,7 +16,7 @@ public sealed class VideoGameDesignerAgent : VideoGameSpecialistAgentBase
     internal const int DefaultOutputTokens = 128_000;
     private const int MinimumOutputTokens = 1_000;
     public override string AgentId => "com.csweet.video-game-designer";
-    public override string Version => "3.1.0";
+    public override string Version => "3.2.0";
     protected override AgentConfigurationBuilder Configure(AgentConfigurationBuilder builder) =>
         base.Configure(builder)
             .Number("maxContextWindowTokens", "Maximum context-window tokens", required: true,
