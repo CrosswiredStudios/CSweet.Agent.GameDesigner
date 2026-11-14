@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Provenance hashes cover the exact bytes checked out on every platform.
+extensions/video-game/*.cs text eol=lf
+extensions/video-game/*.md text eol=lf
+extensions/video-game/*.json text eol=lf
