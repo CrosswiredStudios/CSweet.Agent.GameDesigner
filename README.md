@@ -1,6 +1,6 @@
 # C-Sweet Video Game Designer
 
-First-party `com.csweet.video-game-designer` agent, version `3.2.0`.
+First-party `com.csweet.video-game-designer` agent, version `3.2.1`.
 
 It consumes an approved high-level GDD and authors Gameplay & Systems Design, UX/Controls/Accessibility, and Prototype/Content/Validation documents. It participates in a five-document package with Creative Direction. Every cross-agent document requires a human-approved exact-file grant. The package has no network, filesystem, or spending authority.
 
@@ -35,3 +35,13 @@ SDK 3.65.0 dispatches authenticated delegation before specialist conversation fa
 ## Execution contract (3.0.0)
 
 Execution uses one `work.execution.run` capability and `WorkExecutionAssignment` from SDK/WorkManagement.Contracts 4.0.0. Task and aggregate scopes retain their distinct authority checks within that envelope. Upgrade the platform and executing agents together; no legacy execution adapter remains.
+
+## CI dependency fallback
+
+GitHub Actions uses the pinned SDK and WorkManagement.Contracts versions from NuGet when available.
+An unpublished version is packed from its reviewed full commit in `build/ci-dependencies.json`.
+Update that commit pin together with any SDK or contracts dependency bump; CI rejects mismatched versions.
+Packages stay local to the job and are never pushed to NuGet. The job summary and dependency-provenance
+artifact record origins, source commits and SHA-256 hashes. Private source repositories require the optional
+`CSWEET_DEPENDENCY_READ_TOKEN` Actions secret with read access to the dependency repositories.
+Run `python3 scripts/test-ci-dependencies.py` for the offline resolver regression tests.
