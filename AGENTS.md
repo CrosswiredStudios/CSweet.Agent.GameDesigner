@@ -2,7 +2,7 @@
 
 ## Invariants
 
-- Keep `com.csweet.video-game-designer` and version `3.2.2` synchronized between agent code,
+- Keep `com.csweet.video-game-designer` and version `3.2.3` synchronized between agent code,
   `csweet-plugin.json`, tests, and releases.
 
 ## Release-note ordering
